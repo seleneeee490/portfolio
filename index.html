@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>周柳 | 互动媒体艺术 & 游戏管理作品集</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #fdfae5;
+            --primary-blue: #3498db;
+            --secondary-orange: #ff6b6b;
+            --accent-yellow: #f1c40f;
+            --text-dark: #2c3e50;
+        }
+        body {
+            background-color: var(--bg-color);
+            background-image:
+                linear-gradient(rgba(220, 230, 200, 0.5) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(220, 230, 200, 0.5) 1px, transparent 1px);
+            background-size: 25px 25px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+        .handwritten { font-family: 'ZCOOL KuaiLe', cursive; }
+        .sticker-card {
+            background: white;
+            border: 3px solid #000;
+            box-shadow: 8px 8px 0px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            transition: transform 0.2s;
+        }
+        .sticker-card:hover {
+            transform: translate(-2px, -2px) rotate(1deg);
+        }
+        .stamp-photo {
+            padding: 10px;
+            background: white;
+            border: 2px dashed #3498db;
+            position: relative;
+        }
+        .stamp-photo::after {
+            content: "Hello! 😊";
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            background: #ff9f43;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-size: 12px;
+            transform: rotate(15deg);
+        }
+        .skill-bar-inner {
+            height: 100%;
+            background: var(--secondary-orange);
+            border-radius: 5px;
+            transition: width 1s ease-in-out;
+        }
+        .tag {
+            border: 2px solid #3498db;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            background: #ebf5fb;
+            display: inline-block;
+        }
+        .tag:hover {
+            background: var(--primary-blue);
+            color: white;
+        }
+        .custom-button {
+            background: var(--primary-blue);
+            border: 2px solid #000;
+            box-shadow: 4px 4px 0px #000;
+            color: white;
+            padding: 10px 20px;
+            transition: all 0.1s;
+            display: inline-block;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .custom-button:active {
+            box-shadow: 0px 0px 0px #000;
+            transform: translate(4px, 4px);
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            background: #1a1a2e;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .video-container video,
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .page {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        .page.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .feature-card {
+            background: #f8f9ff;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.2s;
+        }
+        .feature-card:hover {
+            border-color: var(--primary-blue);
+            transform: translateY(-2px);
+        }
+        .nav-bar {
+            background: white;
+            border: 3px solid #000;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+            border-radius: 12px;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <!-- ==================== 全局顶部导航 ==================== -->
+    <div class="max-w-6xl mx-auto mb-6">
+        <div class="nav-bar p-3 flex flex-wrap items-center justify-between gap-2">
+            <button onclick="navigateTo('home')" class="handwritten text-xl font-bold text-blue-600 hover:text-blue-800">周柳</button>
+            <div class="flex flex-wrap gap-2 text-sm">
+                <button onclick="navigateTo('home')" class="px-3 py-1 rounded hover:bg-blue-50 transition">首页</button>
+                <button onclick="navigateTo('capsule')" class="px-3 py-1 rounded hover:bg-blue-50 transition">胶囊</button>
+                <button onclick="navigateTo('dreamshot')" class="px-3 py-1 rounded hover:bg-blue-50 transition">DreamShot</button>
+                <button onclick="navigateTo('gamedesign')" class="px-3 py-1 rounded hover:bg-blue-50 transition">游戏设计</button>
+                <button onclick="navigateTo('uecutscene')" class="px-3 py-1 rounded hover:bg-blue-50 transition">过场动画</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== PAGE: 首页 ==================== -->
+    <div id="page-home" class="page active max-w-6xl mx-auto">
+        <header class="relative mb-20">
+            <div class="bg-[#3498db] text-white p-12 text-center rounded-3xl relative overflow-hidden">
+                <div class="absolute top-4 left-4 bg-white text-blue-600 px-4 py-1 rounded-full font-bold shadow-lg transform -rotate-12">GAME DESIGN</div>
+                <div class="absolute bottom-4 right-10 bg-orange-400 text-white px-4 py-1 rounded-md font-bold shadow-lg transform rotate-6">2026 PORTFOLIO</div>
+                <h1 class="text-6xl md:text-8xl handwritten mb-4 drop-shadow-lg">周柳 (selene)</h1>
+                <p class="text-xl md:text-2xl font-light opacity-90">主修课程</p>
+                <div class="mt-8 flex justify-center gap-4 flex-wrap">
+                    <span class="bg-white/20 px-4 py-1 rounded-full backdrop-blur-sm">游戏设计</span>
+                    <span class="bg-white/20 px-4 py-1 rounded-full backdrop-blur-sm">AIGC</span>
+                    <span class="bg-white/20 px-4 py-1 rounded-full backdrop-blur-sm">人机交互</span>
+                    <span class="bg-white/20 px-4 py-1 rounded-full backdrop-blur-sm">项目管理</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="grid grid-cols-1 md:grid-cols-12 gap-8">
+            <!-- 左侧 -->
+            <aside class="md:col-span-4 space-y-8">
+                <div class="sticker-card p-6 flex flex-col items-center">
+                    <div class="stamp-photo mb-4">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Lucky" alt="周柳头像" class="w-32 h-32 rounded-lg bg-blue-50">
+                    </div>
+                    <h2 class="text-2xl font-bold handwritten mb-1">周柳</h2>
+                    <p class="text-gray-500 mb-4">24岁 | 现居澳门</p>
+                    <div class="w-full space-y-2 text-sm">
+                        <div class="flex justify-between border-b pb-1"><span>电话</span><b>18874961459</b></div>
+                        <div class="flex justify-between border-b pb-1"><span>微信</span><b>ZL18874961459</b></div>
+                        <div class="flex justify-between border-b pb-1"><span>学校</span><b>澳门科技大学</b></div>
+                    </div>
+                </div>
+
+                <div class="sticker-card p-6 bg-[#fff9db]">
+                    <h3 class="text-xl font-bold handwritten mb-4 flex items-center gap-2">
+                        <span class="text-blue-500">🎓</span> 教育背景
+                    </h3>
+                    <div class="space-y-4">
+                        <div>
+                            <p class="font-bold text-blue-600">2025.09 - 至今</p>
+                            <p class="text-sm">互动媒体艺术硕士 (游戏管理)</p>
+                        </div>
+                        <div>
+                            <p class="font-bold text-blue-600">2021.09 - 2025.06</p>
+                            <p class="text-sm">数字媒体艺术学士学位 (游戏设计)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sticker-card p-6">
+                    <h3 class="text-xl font-bold handwritten mb-4 flex items-center gap-2">
+                        <span class="text-orange-500">🛠️</span> 软件与AI工具
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-xs"><span>Unreal Engine</span><span>90%</span></div>
+                            <div class="w-full bg-gray-100 h-2 rounded-full"><div class="skill-bar-inner" style="width: 90%;"></div></div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-xs"><span>Figma</span><span>85%</span></div>
+                            <div class="w-full bg-gray-100 h-2 rounded-full"><div class="skill-bar-inner" style="width: 85%;"></div></div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-xs"><span>AIGC (Veo/Midjourney)</span><span>95%</span></div>
+                            <div class="w-full bg-gray-100 h-2 rounded-full"><div class="skill-bar-inner" style="width: 95%;"></div></div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-xs"><span>Cursor / AI Coding</span><span>80%</span></div>
+                            <div class="w-full bg-gray-100 h-2 rounded-full"><div class="skill-bar-inner" style="width: 80%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- 右侧 -->
+            <div class="md:col-span-8 space-y-8">
+                <section class="sticker-card p-8 bg-blue-50 relative overflow-hidden">
+                    <div class="absolute -right-8 -top-8 w-24 h-24 bg-blue-200 rounded-full opacity-50"></div>
+                    <h3 class="text-2xl font-bold handwritten mb-4">About Me</h3>
+                    <p class="leading-relaxed text-gray-700">
+                        一名正在游戏设计与 AI 赋能的互动媒体艺术创作的探索者。我擅长利用 Unreal Engine 构建沉浸式叙事环境，并深度应用 AIGC 工具重塑产品设计流程。目前在澳门科技大学攻读硕士，致力于探索 AI 驱动下互动媒体与用户体验的新边界。
+                    </p>
+                </section>
+
+                <section>
+                    <div class="flex items-end justify-between mb-6 flex-wrap gap-2">
+                        <h3 class="text-3xl font-bold handwritten">Portfolio 项目集</h3>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="tag">AI电子手帐</span>
+                            <span class="tag">AI 短片</span>
+                            <span class="tag bg-blue-500 text-white">游戏设计</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- 作品一 -->
+                        <div class="sticker-card overflow-hidden flex flex-col group">
+                            <div class="h-48 bg-gray-200 relative">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                                <div class="absolute bottom-4 left-4 text-white">
+                                    <span class="bg-orange-500 text-xs px-2 py-1 rounded">AI 短片</span>
+                                    <h4 class="text-xl font-bold mt-1">《胶囊 CAPSULE》</h4>
+                                </div>
+                            </div>
+                            <div class="p-4 flex-grow">
+                                <p class="text-sm text-gray-600 line-clamp-3">
+                                    2077年人类陷入"感官荒漠"，少女米粒拒绝服用虚拟体感胶囊，闯入现实废墟重获生命力。
+                                </p>
+                            </div>
+                            <div class="p-4 pt-0">
+                                <button onclick="navigateTo('capsule')" class="custom-button w-full text-sm text-center">查看详情</button>
+                            </div>
+                        </div>
+
+                        <!-- 作品二 -->
+                        <div class="sticker-card overflow-hidden flex flex-col group">
+                            <div class="h-48 bg-blue-100 relative">
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span class="text-4xl">📸</span>
+                                </div>
+                                <div class="absolute bottom-4 left-4 text-dark">
+                                    <span class="bg-blue-500 text-white text-xs px-2 py-1 rounded">沉浸式平台</span>
+                                    <h4 class="text-xl font-bold mt-1">DreamShot</h4>
+                                </div>
+                            </div>
+                            <div class="p-4 flex-grow">
+                                <p class="text-sm text-gray-600 line-clamp-3">
+                                    AI 驱动的电子手帐与虚拟写真合成平台，构建与偶像的第一人称亲密互动记忆。
+                                </p>
+                            </div>
+                            <div class="p-4 pt-0">
+                                <button onclick="navigateTo('dreamshot')" class="custom-button w-full text-sm text-center">点击预览</button>
+                            </div>
+                        </div>
+
+                        <!-- 作品三 -->
+                        <div class="sticker-card overflow-hidden flex flex-col group">
+                            <div class="h-48 bg-green-100 relative">
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span class="text-4xl">🎮</span>
+                                </div>
+                                <div class="absolute bottom-4 left-4 text-dark">
+                                    <span class="bg-green-500 text-white text-xs px-2 py-1 rounded">游戏设计</span>
+                                    <h4 class="text-xl font-bold mt-1">游戏设计</h4>
+                                </div>
+                            </div>
+                            <div class="p-4 flex-grow">
+                                <p class="text-sm text-gray-600 line-clamp-3">
+                                    Unreal Engine 游戏 Demo 与 Sequencer 实时过场动画作品集。
+                                </p>
+                            </div>
+                            <div class="p-4 pt-0">
+                                <button onclick="navigateTo('gamedesign')" class="custom-button w-full text-sm text-center">进入作品</button>
+                            </div>
+                        </div>
+
+                        <!-- 作品四 -->
+                        <div class="sticker-card overflow-hidden flex flex-col group">
+                            <div class="h-48 bg-indigo-100 relative">
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span class="text-4xl">🎬</span>
+                                </div>
+                                <div class="absolute bottom-4 left-4 text-dark">
+                                    <span class="bg-indigo-500 text-white text-xs px-2 py-1 rounded">过场动画</span>
+                                    <h4 class="text-xl font-bold mt-1">Unreal Engine 过场动画</h4>
+                                </div>
+                            </div>
+                            <div class="p-4 flex-grow">
+                                <p class="text-sm text-gray-600 line-clamp-3">
+                                    UE5 Sequencer 制作的实时电影化过场动画。
+                                </p>
+                            </div>
+                            <div class="p-4 pt-0">
+                                <button onclick="navigateTo('uecutscene')" class="custom-button w-full text-sm text-center">观看作品</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="sticker-card p-8">
+                    <h3 class="text-2xl font-bold handwritten mb-6 flex items-center gap-2">
+                        <span class="text-green-500">💼</span> 实习经历
+                    </h3>
+                    <div class="relative border-l-4 border-blue-200 pl-6 space-y-8">
+                        <div class="relative">
+                            <div class="absolute -left-[30px] top-0 w-4 h-4 bg-blue-500 rounded-full border-4 border-white shadow"></div>
+                            <p class="text-sm font-bold text-gray-400">2024.06 - 2024.08</p>
+                            <h4 class="font-bold text-lg">产品策划 | 湖南安安商贸公司</h4>
+                            <p class="text-sm text-gray-600 mt-1">利用 AIGC 生成产品概念海报、产品图；参与线下门店展柜布置与销售。</p>
+                        </div>
+                        <div class="relative">
+                            <div class="absolute -left-[30px] top-0 w-4 h-4 bg-orange-500 rounded-full border-4 border-white shadow"></div>
+                            <p class="text-sm font-bold text-gray-400">2022.06 - 2022.07</p>
+                            <h4 class="font-bold text-lg">实习记者 | 湖南广播电视台</h4>
+                            <p class="text-sm text-gray-600 mt-1">《寻情记》栏目组，辅助编导剪辑视频及进行实地采访。</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <footer class="mt-12 pb-12">
+            <div class="sticker-card p-6 bg-white flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex gap-8">
+                    <div class="text-center"><div class="text-3xl mb-1">🎮</div><span class="text-xs font-bold">游戏设计</span></div>
+                    <div class="text-center"><div class="text-3xl mb-1">🤖</div><span class="text-xs font-bold">AI创作</span></div>
+                    <div class="text-center"><div class="text-3xl mb-1">🎬</div><span class="text-xs font-bold">创意剪辑</span></div>
+                </div>
+                <div class="text-right">
+                    <p class="handwritten text-xl">Let's Create Together!</p>
+                    <p class="text-gray-400 text-xs">© 2026 ZHOU LIU PORTFOLIO</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ==================== PAGE: 胶囊 CAPSULE ==================== -->
+    <div id="page-capsule" class="page max-w-4xl mx-auto">
+        <div class="mb-8 flex items-center justify-between">
+            <button onclick="navigateTo('home')" class="custom-button text-sm flex items-center gap-2">← 返回作品集</button>
+            <span class="text-sm text-gray-400">周柳 · 作品详情</span>
+        </div>
+
+        <header class="sticker-card p-8 mb-8 bg-gradient-to-r from-blue-50 to-purple-50">
+            <div class="flex flex-wrap items-start justify-between gap-4">
+                <div>
+                    <span class="tag bg-orange-500 text-white border-orange-500 mb-3">AI 短片</span>
+                    <h1 class="text-4xl md:text-5xl handwritten mb-2">《胶囊 CAPSULE》</h1>
+                    <p class="text-gray-500">2025 · 科幻短片 · 约 5 分钟</p>
+                </div>
+                <div class="flex gap-2">
+                    <span class="bg-gray-100 px-3 py-1 rounded text-sm">#科幻</span>
+                    <span class="bg-gray-100 px-3 py-1 rounded text-sm">#AI生成</span>
+                    <span class="bg-gray-100 px-3 py-1 rounded text-sm">#反乌托邦</span>
+                </div>
+            </div>
+        </header>
+
+        <section class="sticker-card p-6 mb-8">
+            <h2 class="text-2xl font-bold handwritten mb-4">🎬 影片预览</h2>
+            <div class="video-container" style="padding-top:56.25%">
+                <video controls playsinline>
+                    <source src="assets/capsule.mp4" type="video/mp4">
+                    您的浏览器不支持视频播放
+                </video>
+            </div>
+        </section>
+
+        <section class="sticker-card p-8 mb-8">
+            <h2 class="text-2xl font-bold handwritten mb-4">📖 剧情简介</h2>
+            <div class="text-gray-700 leading-relaxed space-y-4">
+                <p>公元 2077 年，人类陷入前所未有的"感官荒漠"——科技巨头推出虚拟体感胶囊，人们只需吞下一颗即可获得一切愉悦体验，逐渐放弃了真实的感知与世界。</p>
+                <p>少女 <strong>米粒</strong> 是极少数拒绝服用胶囊的人。在周围所有人都沉迷于虚拟幻象的世界里，她独自闯入被废弃的现实废墟，在破败的城市与自然遗迹中重新寻找真实的情感与生命力。</p>
+                <p>影片以极具视觉冲击力的 AI 影像风格，探讨了在技术高度发达的未来，人类对真实体验的渴望与迷失。</p>
+            </div>
+        </section>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <section class="sticker-card p-6">
+                <h3 class="text-xl font-bold handwritten mb-4">🎨 创作理念</h3>
+                <p class="text-sm text-gray-600 leading-relaxed">灵感来源于对当代"数字依赖"的观察。当 VR、AIGC 等技术让虚拟体验越来越真实，人类是否会在舒适区中失去面对现实的勇气？《胶囊》是对这一命题的影像化思考。</p>
+            </section>
+            <section class="sticker-card p-6">
+                <h3 class="text-xl font-bold handwritten mb-4">🛠️ 技术栈</h3>
+                <div class="flex flex-wrap gap-2 mb-4">
+                    <span class="tag text-xs">Veo 2</span>
+                    <span class="tag text-xs">Midjourney</span>
+                    <span class="tag text-xs">Runway Gen-3</span>
+                    <span class="tag text-xs">CapCut</span>
+                    <span class="tag text-xs">Suno AI</span>
+                </div>
+                <p class="text-sm text-gray-600">使用 Veo 2 + Midjourney 生成视觉影像，Runway 进行动态处理，Suno AI 辅助配乐，最终在 CapCut 中完成剪辑与调色。</p>
+            </section>
+        </div>
+
+        <div class="flex justify-between items-center">
+            <button onclick="navigateTo('home')" class="custom-button text-sm">← 返回作品集</button>
+            <button onclick="navigateTo('dreamshot')" class="custom-button text-sm bg-orange-500">下一个作品 →</button>
+        </div>
+        <footer class="mt-12 text-center text-gray-400 text-xs"><p>© 2026 ZHOU LIU PORTFOLIO</p></footer>
+    </div>
+
+    <!-- ==================== PAGE: DreamShot ==================== -->
+    <div id="page-dreamshot" class="page max-w-4xl mx-auto">
+        <div class="mb-8 flex items-center justify-between">
+            <button onclick="navigateTo('home')" class="custom-button text-sm flex items-center gap-2">← 返回作品集</button>
+            <span class="text-sm text-gray-400">周柳 · 作品详情</span>
+        </div>
+
+        <header class="sticker-card p-8 mb-8 bg-gradient-to-r from-pink-50 to-purple-50">
+            <div class="flex flex-wrap items-start justify-between gap-4">
+                <div>
+                    <span class="tag bg-blue-500 text-white border-blue-500 mb-3">沉浸式平台</span>
+                    <h1 class="text-4xl md:text-5xl handwritten mb-2">DreamShot</h1>
+                    <p class="text-gray-500">2025 · AI 电子手帐 & 虚拟写真合成平台</p>
+                </div>
+                <div class="flex gap-2">
+                    <span class="bg-gray-100 px-3 py-1 rounded text-sm">#AI</span>
+                    <span class="bg-gray-100 px-3 py-1 rounded text-sm">#虚拟写真</span>
+                    <span class="bg-gray-100 px-3 py-1 rounded text-sm">#互动叙事</span>
+                </div>
+            </div>
+        </header>
+
+        <section class="sticker-card p-6 mb-8">
+            <h2 class="text-2xl font-bold handwritten mb-4">🎥 平台演示</h2>
+            <div class="video-container" style="padding-top:56.25%">
+                <video controls playsinline>
+                    <source src="assets/dreamshot.mp4" type="video/mp4">
+                    您的浏览器不支持视频播放
+                </video>
+            </div>
+        </section>
+
+        <section class="sticker-card p-8 mb-8">
+            <h2 class="text-2xl font-bold handwritten mb-4">💡 项目概述</h2>
+            <div class="text-gray-700 leading-relaxed space-y-4">
+                <p>DreamShot 是一个 <strong>AI 驱动的电子手帐与虚拟写真合成平台</strong>，旨在为用户构建与偶像的"第一人称亲密互动记忆"。</p>
+                <p>通过 AIGC 图像生成、面部融合与沉浸式页面设计，用户可以上传照片生成与偶像的虚拟合照、手帐风格纪念页，并获得沉浸式的叙事体验。</p>
+            </div>
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold handwritten mb-6">✨ 核心功能</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="feature-card">
+                    <div class="text-3xl mb-2">🖼️</div>
+                    <h4 class="font-bold mb-2">AI 虚拟写真合成</h4>
+                    <p class="text-sm text-gray-600">基于面部识别与风格迁移技术，将用户照片与偶像素材自然融合，生成高质量的虚拟合影。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="text-3xl mb-2">📔</div>
+                    <h4 class="font-bold mb-2">电子手帐生成</h4>
+                    <p class="text-sm text-gray-600">自动生成精美的手帐风格纪念页面，支持多种主题模板与个性化文字编辑。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="text-3xl mb-2">🎭</div>
+                    <h4 class="font-bold mb-2">沉浸式叙事体验</h4>
+                    <p class="text-sm text-gray-600">结合互动叙事设计，让用户在与偶像的"互动记忆"中获得沉浸式情感体验。</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <section class="sticker-card p-6">
+                <h3 class="text-xl font-bold handwritten mb-4">🛠️ 技术栈</h3>
+                <div class="flex flex-wrap gap-2 mb-4">
+                    <span class="tag text-xs">Midjourney</span>
+                    <span class="tag text-xs">Stable Diffusion</span>
+                    <span class="tag text-xs">React</span>
+                    <span class="tag text-xs">Figma</span>
+                    <span class="tag text-xs">Python</span>
+                </div>
+                <p class="text-sm text-gray-600">前端使用 React 构建交互界面，AI 图像生成基于 Midjourney + Stable Diffusion，UI/UX 设计在 Figma 中完成。</p>
+            </section>
+            <section class="sticker-card p-6">
+                <h3 class="text-xl font-bold handwritten mb-4">🎯 目标用户</h3>
+                <ul class="text-sm text-gray-600 space-y-2">
+                    <li class="flex items-start gap-2"><span class="text-blue-500">•</span> 追星群体 — 希望与偶像产生更亲近的互动体验</li>
+                    <li class="flex items-start gap-2"><span class="text-blue-500">•</span> 手帐爱好者 — 喜欢记录生活与数字手帐创作</li>
+                    <li class="flex items-start gap-2"><span class="text-blue-500">•</span> 社交媒体用户 — 寻求个性化虚拟写真内容</li>
+                </ul>
+            </section>
+        </div>
+
+        <div class="flex justify-between items-center">
+            <button onclick="navigateTo('capsule')" class="custom-button text-sm">← 上一个作品</button>
+            <button onclick="navigateTo('gamedesign')" class="custom-button text-sm bg-orange-500">下一个作品 →</button>
+        </div>
+        <footer class="mt-12 text-center text-gray-400 text-xs"><p>© 2026 ZHOU LIU PORTFOLIO</p></footer>
+    </div>
+
+    <!-- ==================== PAGE: 游戏设计 ==================== -->
+    <div id="page-gamedesign" class="page max-w-4xl mx-auto">
+        <div class="mb-8 flex items-center justify-between">
+            <button onclick="navigateTo('home')" class="custom-button text-sm flex items-center gap-2">← 返回作品集</button>
+            <span class="text-sm text-gray-400">周柳 · 作品详情</span>
+        </div>
+
+        <header class="sticker-card p-8 mb-8 bg-gradient-to-r from-green-50 to-emerald-50">
+            <div class="flex flex-wrap items-start justify-between gap-4">
+                <div>
+                    <span class="tag bg-green-500 text-white border-green-500 mb-3">游戏设计</span>
+                    <h1 class="text-4xl md:text-5xl handwritten mb-2">游戏设计</h1>
+                    <p class="text-gray-500">Unreal Engine · 关卡设计</p>
+                </div>
+                <div class="flex gap-2">
+                    <span class="bg-gray-100 px-3 py-1 rounded text-sm">#UnrealEngine</span>
+                    <span class="bg-gray-100 px-3 py-1 rounded text-sm">#游戏设计</span>
+                </div>
+            </div>
+        </header>
+
+        <section class="sticker-card p-8 mb-8">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="text-3xl">🎮</span>
+                <h2 class="text-2xl font-bold handwritten">游戏设计项目</h2>
+            </div>
+            <div class="text-gray-700 leading-relaxed space-y-4 mb-6">
+                <p>使用 <strong>Unreal Engine</strong> 设计并开发的游戏 Demo，涵盖关卡设计、角色控制、基础交互与叙事引导。从游戏机制原型到可玩关卡，完整实践了游戏设计流程。</p>
+                <p>项目注重 <strong>沉浸式环境叙事</strong>，通过场景布置、光影与空间引导，让玩家在探索中自然感受故事背景。关卡设计融合了引导式路径与开放式探索区域，平衡叙事节奏与玩家自由度。</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                    <h4 class="font-bold text-sm text-blue-600 mb-2">关卡设计</h4>
+                    <p class="text-xs text-gray-600">基于 UE5 搭建的交互式游戏关卡，包含环境叙事、光照氛围与空间引导设计。</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                    <h4 class="font-bold text-sm text-blue-600 mb-2">机制原型</h4>
+                    <p class="text-xs text-gray-600">角色移动、互动触发、UI 反馈等核心玩法机制的设计与实现。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="sticker-card p-6 mb-8">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="text-2xl">🎬</span>
+                <h2 class="text-xl font-bold handwritten">游戏 Demo 展示</h2>
+            </div>
+            <div class="video-container" style="padding-top:46.18%">
+                <video controls playsinline>
+                    <source src="assets/game%20desgin.mp4" type="video/mp4">
+                    您的浏览器不支持视频播放
+                </video>
+            </div>
+        </section>
+
+        <div class="flex justify-between items-center">
+            <button onclick="navigateTo('dreamshot')" class="custom-button text-sm">← 上一个作品</button>
+            <button onclick="navigateTo('uecutscene')" class="custom-button text-sm bg-orange-500">下一个作品 →</button>
+        </div>
+        <footer class="mt-12 text-center text-gray-400 text-xs"><p>© 2026 ZHOU LIU PORTFOLIO</p></footer>
+    </div>
+
+    <!-- ==================== PAGE: UE 过场动画 ==================== -->
+    <div id="page-uecutscene" class="page max-w-4xl mx-auto">
+        <div class="mb-8 flex items-center justify-between">
+            <button onclick="navigateTo('home')" class="custom-button text-sm flex items-center gap-2">← 返回作品集</button>
+            <span class="text-sm text-gray-400">周柳 · 作品详情</span>
+        </div>
+
+        <header class="sticker-card p-8 mb-8 bg-gradient-to-r from-purple-50 to-indigo-50">
+            <div class="flex flex-wrap items-start justify-between gap-4">
+                <div>
+                    <span class="tag bg-indigo-500 text-white border-indigo-500 mb-3">过场动画</span>
+                    <h1 class="text-4xl md:text-5xl handwritten mb-2">Unreal Engine 过场动画</h1>
+                    <p class="text-gray-500">UE5 Sequencer · 实时渲染 · 电影化叙事</p>
+                </div>
+                <div class="flex gap-2">
+                    <span class="bg-gray-100 px-3 py-1 rounded text-sm">#UnrealEngine</span>
+                    <span class="bg-gray-100 px-3 py-1 rounded text-sm">#Sequencer</span>
+                    <span class="bg-gray-100 px-3 py-1 rounded text-sm">#CineCamera</span>
+                </div>
+            </div>
+        </header>
+
+        <section class="sticker-card p-6 mb-8">
+            <div class="video-container" style="padding-top:41.94%">
+                <video controls playsinline>
+                    <source src="assets/guochangdonghua.MP4" type="video/mp4">
+                    您的浏览器不支持视频播放
+                </video>
+            </div>
+        </section>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <section class="sticker-card p-6">
+                <h3 class="text-xl font-bold handwritten mb-4">🎬 制作概述</h3>
+                <p class="text-sm text-gray-600 leading-relaxed">使用 Unreal Engine 5 的 <strong>Sequencer</strong> 工具制作的实时过场动画，在引擎内直接完成从镜头调度、角色动画到后期调色的完整 cinematic 叙事流程。</p>
+            </section>
+            <section class="sticker-card p-6">
+                <h3 class="text-xl font-bold handwritten mb-4">🛠️ 技术栈</h3>
+                <div class="flex flex-wrap gap-2">
+                    <span class="tag text-xs">UE5 Sequencer</span>
+                    <span class="tag text-xs">Level Sequence</span>
+                    <span class="tag text-xs">Cine Camera</span>
+                    <span class="tag text-xs">Post Process</span>
+                    <span class="tag text-xs">动画蓝图</span>
+                    <span class="tag text-xs">实时渲染</span>
+                </div>
+            </section>
+        </div>
+
+        <div class="flex justify-between items-center">
+            <button onclick="navigateTo('gamedesign')" class="custom-button text-sm">← 上一个作品</button>
+            <button onclick="navigateTo('home')" class="custom-button text-sm">返回作品集 →</button>
+        </div>
+        <footer class="mt-12 text-center text-gray-400 text-xs"><p>© 2026 ZHOU LIU PORTFOLIO</p></footer>
+    </div>
+
+    <!-- ==================== GLOBAL FOOTER for non-home pages ==================== -->
+    <div id="global-footer" class="max-w-6xl mx-auto text-center text-gray-400 text-xs mt-12" style="display:none">
+        <p>© 2026 ZHOU LIU PORTFOLIO</p>
+    </div>
+
+    <script>
+        function navigateTo(page) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(p => {
+                p.classList.remove('active');
+            });
+            // Show target
+            const target = document.getElementById('page-' + page);
+            if (target) {
+                target.classList.add('active');
+            }
+            // Update hash
+            if (page === 'home') {
+                history.pushState(null, '', window.location.pathname);
+            } else {
+                history.pushState(null, '', '#' + page);
+            }
+            // Pause all videos
+            document.querySelectorAll('video').forEach(v => v.pause());
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Handle back/forward buttons
+        window.addEventListener('popstate', function() {
+            const page = window.location.hash.slice(1) || 'home';
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const target = document.getElementById('page-' + page);
+            if (target) target.classList.add('active');
+            document.querySelectorAll('video').forEach(v => v.pause());
+        });
+
+        // On load, check hash
+        document.addEventListener('DOMContentLoaded', function() {
+            const page = window.location.hash.slice(1) || 'home';
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const target = document.getElementById('page-' + page);
+            if (target) target.classList.add('active');
+
+            // Scroll animation for sticker-cards
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('opacity-100');
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.sticker-card, .feature-card').forEach(card => {
+                if (!card.closest('.page') || card.closest('.page').classList.contains('active')) {
+                    card.classList.add('opacity-0', 'transition-all', 'duration-700');
+                    card.style.transform = 'translateY(20px)';
+                    observer.observe(card);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
